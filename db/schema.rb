@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180625162504) do
+ActiveRecord::Schema.define(version: 20180711065205) do
 
   create_table "countries", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name"
@@ -26,7 +26,7 @@ ActiveRecord::Schema.define(version: 20180625162504) do
     t.integer "period"
     t.string  "event_type"
     t.string  "out_come_type"
-    t.string  "qualifier"
+    t.text    "qualifier",          limit: 65535
     t.string  "satisfied_event"
     t.boolean "is_touch"
     t.integer "player_id"
