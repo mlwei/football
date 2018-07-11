@@ -1,3 +1,3 @@
 class Event < ActiveRecord::Base
-  serialize :qualifier , Array
+  serialize :qualifier , Hash
 end

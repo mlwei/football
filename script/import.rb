@@ -4,7 +4,9 @@ require 'active_record'
 class Country < ActiveRecord::Base ; end
 class Player < ActiveRecord::Base ; end
 class Match < ActiveRecord::Base ; end
-class Event < ActiveRecord::Base ; end
+class Event < ActiveRecord::Base
+  serialize :qualifier , Hash
+end
 module Import
   def self.initialize!
     ActiveRecord::Base.establish_connection(YAML::load(File.open("#{__dir__}/../config/database.yml").read)['development'])
@@ -55,9 +57,9 @@ module Import
     end
     raw_data["events"].each do |t|
       puts t
-      qualifier = ""
+      qualifier = {}
       t["qualifiers"].each do |i|
-        qualifier += i["type"]["displayName"] + ":" + i["value"].to_s + ","
+        qualifier[i["type"]["displayName"]] = i["value"].to_s
       end
       Event.create(
         :event_id => t["eventId"],
