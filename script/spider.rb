@@ -2,9 +2,8 @@ require 'nokogiri'
 require 'open-uri'
 require 'active_record'
 require 'json'
-
-TARGET = ['World Cup Group Stages' , 'World Cup 1/8 Finals' , 'World Cup Quarter Finals' , '']
-
+URL = "https://www.whoscored.com/Regions/247/Tournaments/36/Seasons/5967/Stages/15737/Show/International-FIFA-World-Cup-2018"
+TARGET = ['World Cup Group Stages' , 'World Cup 1/8 Finals' , 'World Cup Quarter Finals' , 'World Cup Semi Finals' , 'World Cup Bronze Match' , 'World Cup Final']
 module Spider
   def self.initialize!
     @doc = Nokogiri::HTML(open(url))
@@ -12,7 +11,7 @@ module Spider
   end
   def self.go!
     stages = []
-    @doc..css('#breadcrumb-nav #stages option').each do |element|
+    @doc.css('#breadcrumb-nav #stages option').each do |element|
       if TARGET.include? element.children.to_s
         stages << element.attr("value")
       end
